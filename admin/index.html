@@ -20,7 +20,13 @@
     <a href="news.html">📰 News</a>
     <a href="programs.html">🎯 Programmes</a>
   </nav>
-  <div class="foot">© 2026 Kalam Centre Admin</div>
+
+  <div class="sidebar-footer">
+    <button id="logoutBtn" class="logout-btn-sidebar">
+      <span>🚪</span> Logout
+    </button>
+    <div class="foot">© 2026 Kalam Centre Admin</div>
+  </div>
 </aside>
 
 <div class="main">
@@ -69,6 +75,13 @@
     }
   }
   loadCounts();
+
+  // Logout: token/username clear karke login page pe bhej deta hai
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminUsername');
+    window.location.href = 'login.html';
+  });
 </script>
 
 </body>

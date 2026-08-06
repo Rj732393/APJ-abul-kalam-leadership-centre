@@ -3,91 +3,286 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login - APJ Abdul Kalam Centre</title>
+<title>Admin Login - Kalam Centre</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+  :root{
+    --navy:#0f172a;
+    --navy-light:#1e293b;
+    --cream:#f4efe4;
+    --cream-soft:#eee7d8;
+    --orange:#f2954a;
+    --orange-deep:#e07b2e;
+    --ink:#0f172a;
+    --muted:#64748b;
+    --danger:#dc2626;
+    --success:#16a34a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
+    font-family: 'Segoe UI', Arial, sans-serif;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #0f172a;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
   }
+
+  /* soft ambient shapes, static-ish, very subtle drift */
+  .blob-a, .blob-b{
+    position:absolute;
+    border-radius:50%;
+    filter: blur(70px);
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .blob-a{
+    width:420px; height:420px;
+    background: radial-gradient(circle, rgba(242,149,74,0.35), transparent 70%);
+    top:-140px; left:-120px;
+    animation: driftA 10s ease-in-out infinite;
+  }
+  .blob-b{
+    width:380px; height:380px;
+    background: radial-gradient(circle, rgba(15,23,42,0.18), transparent 70%);
+    bottom:-140px; right:-100px;
+    animation: driftA 12s ease-in-out infinite reverse;
+  }
+  @keyframes driftA{
+    0%,100%{ transform: translate(0,0); }
+    50%{ transform: translate(14px,-10px); }
+  }
+
   .card {
+    position: relative;
+    z-index: 2;
     background: #ffffff;
-    padding: 40px 36px;
-    border-radius: 10px;
+    padding: 0;
+    border-radius: 14px;
     width: 100%;
-    max-width: 360px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 380px;
+    box-shadow: 0 20px 50px rgba(15,23,42,0.15);
+    overflow: hidden;
+    animation: riseIn 0.55s cubic-bezier(.2,.9,.25,1) both;
   }
-  .card h1 {
-    font-size: 22px;
-    margin-bottom: 24px;
-    color: #0f172a;
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-top{
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 30px 34px 26px;
     text-align: center;
+    position: relative;
   }
-  label {
+  .card-top::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--orange-deep), var(--orange), var(--orange-deep));
+    background-size: 200% 100%;
+    animation: shimmer 3.5s linear infinite;
+  }
+  @keyframes shimmer{
+    0%{ background-position: 0% 0; }
+    100%{ background-position: -200% 0; }
+  }
+
+  .logo-badge{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin: 0 auto 14px;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+    box-shadow: 0 8px 20px rgba(242,149,74,0.35);
+  }
+  .logo-badge svg{ width: 24px; height: 24px; }
+
+  .card-top h1{
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.2px;
+  }
+  .card-top .tag{
+    font-size: 11.5px;
+    color: var(--orange);
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .card-body{
+    padding: 30px 34px 32px;
+  }
+
+  form label {
     display: block;
-    font-size: 13px;
-    color: #334155;
+    font-size: 12.5px;
+    color: var(--muted);
+    font-weight: 600;
     margin-bottom: 6px;
     margin-top: 16px;
+    letter-spacing: 0.2px;
   }
+  form label:first-of-type{ margin-top: 0; }
+
   input {
     width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
+    padding: 11px 13px;
+    background: var(--cream);
+    border: 1.5px solid #e4dccb;
+    border-radius: 8px;
     font-size: 14px;
+    color: var(--ink);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
-  input:focus { outline: none; border-color: #0f172a; }
+  input::placeholder{ color: #a5a29a; }
+  input:focus {
+    outline: none;
+    border-color: var(--orange);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(242,149,74,0.18);
+  }
+
   button {
+    position: relative;
     width: 100%;
     margin-top: 24px;
-    padding: 11px;
-    background: #0f172a;
-    color: #fff;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+    background-size: 200% 200%;
+    color: #ffffff;
+    font-weight: 700;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 15px;
     cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: transform 0.15s ease, box-shadow 0.25s ease, background-position 0.5s ease;
+    box-shadow: 0 8px 18px rgba(224,123,46,0.35);
   }
-  button:hover { background: #1e293b; }
+  button:hover {
+    background-position: 100% 0%;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 22px rgba(224,123,46,0.45);
+  }
+  button:active{ transform: translateY(0); }
+  button:disabled{
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  button .btn-label{ position:relative; z-index:1; }
+
+  .spinner{
+    display:none;
+    width:16px;
+    height:16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #ffffff;
+    border-radius:50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto;
+  }
+  @keyframes spin { to{ transform:rotate(360deg); } }
+  button.loading .btn-label{ display:none; }
+  button.loading .spinner{ display:block; }
+
   #msg {
     margin-top: 14px;
     font-size: 13px;
     text-align: center;
+    min-height: 16px;
+    font-weight: 600;
   }
-  .error { color: #dc2626; }
-  .success { color: #16a34a; }
+  .error { color: var(--danger); }
+  .success { color: var(--success); }
+
+  .footnote{
+    text-align:center;
+    font-size: 11px;
+    color: #a09c92;
+    margin-top: 18px;
+  }
+
+  @media (max-width: 420px){
+    .card-top{ padding: 26px 24px 22px; }
+    .card-body{ padding: 26px 24px 26px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
 </style>
 </head>
 <body>
 
+  <div class="blob-a"></div>
+  <div class="blob-b"></div>
+
   <div class="card">
-    <h1>Admin Login</h1>
-    <form id="loginForm">
-      <label for="username">Username</label>
-      <input type="text" id="username" required>
+    <div class="card-top">
+      <div class="logo-badge">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="8" r="4" fill="#ffffff"/>
+          <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <h1>Kalam Centre</h1>
+      <div class="tag">Admin Panel</div>
+    </div>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" required>
+    <div class="card-body">
+      <form id="loginForm">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Apna username daalein" required>
 
-      <button type="submit">Login</button>
-      <div id="msg"></div>
-    </form>
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Apna password daalein" required>
+
+        <button type="submit" id="loginBtn">
+          <span class="btn-label">Login</span>
+          <span class="spinner"></span>
+        </button>
+        <div id="msg"></div>
+      </form>
+      <div class="footnote">&copy; 2026 Kalam Centre Admin</div>
+    </div>
   </div>
 
 <script>
   const API_URL = 'http://localhost:5000/api/auth/login';
 
-  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  const form = document.getElementById('loginForm');
+  const loginBtn = document.getElementById('loginBtn');
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const msg = document.getElementById('msg');
     msg.textContent = '';
+    msg.className = '';
+
+    loginBtn.disabled = true;
+    loginBtn.classList.add('loading');
 
     try {
       const res = await fetch(API_URL, {
@@ -117,6 +312,9 @@
     } catch (err) {
       msg.textContent = 'Server se connect nahi ho paya';
       msg.className = 'error';
+    } finally {
+      loginBtn.disabled = false;
+      loginBtn.classList.remove('loading');
     }
   });
 </script>
