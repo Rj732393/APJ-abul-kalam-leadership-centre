@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Kalam Centre</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/authGuard.js"></script>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">Kalam Centre<br><span>Admin Panel</span></div>
+  <nav>
+    <a href="index.html" class="active">📊 Dashboard</a>
+    <a href="settings.html">⚙️ Site Settings</a>
+    <a href="board.html">👥 Advisory Board</a>
+    <a href="gallery.html">🖼️ Gallery</a>
+    <a href="news.html">📰 News</a>
+    <a href="programs.html">🎯 Programmes</a>
+  </nav>
+  <div class="foot">© 2026 Kalam Centre Admin</div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <button id="menuToggle" class="btn btn-ghost btn-sm" style="display:none;">☰</button>
+    <h1>Dashboard</h1>
+    <span class="badge">Welcome, Admin</span>
+  </div>
+
+  <div class="content">
+    <div class="card-row" id="statCards">
+      <div class="stat-box"><div class="num" id="cBoard">-</div><div class="label">Advisory Board Members</div></div>
+      <div class="stat-box"><div class="num" id="cGallery">-</div><div class="label">Gallery Photos</div></div>
+      <div class="stat-box"><div class="num" id="cNews">-</div><div class="label">News Articles</div></div>
+      <div class="stat-box"><div class="num" id="cPrograms">-</div><div class="label">Programmes</div></div>
+    </div>
+
+    <div class="card">
+      <h2>Quick Actions</h2>
+      <div class="actions" style="margin-top:0;">
+        <a href="settings.html" class="btn btn-primary">Edit Site Content</a>
+        <a href="board.html" class="btn btn-navy">Manage Board</a>
+        <a href="gallery.html" class="btn btn-navy">Upload Gallery Photo</a>
+        <a href="news.html" class="btn btn-navy">Add News</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+  async function loadCounts() {
+    try {
+      const [board, gallery, news, programs] = await Promise.all([
+        apiRequest('/api/board'),
+        apiRequest('/api/gallery'),
+        apiRequest('/api/news'),
+        apiRequest('/api/programs')
+      ]);
+      document.getElementById('cBoard').textContent = board.length;
+      document.getElementById('cGallery').textContent = gallery.length;
+      document.getElementById('cNews').textContent = news.length;
+      document.getElementById('cPrograms').textContent = programs.length;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  loadCounts();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. A P J Abdul Kalam Centre For Leadership And Social Change</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg id="trajectory-svg" aria-hidden="true">
+  <path id="trajectory-path" d=""></path>
+  <circle id="trajectory-dot" r="4" cx="0" cy="0"></circle>
+</svg>
+
+<header>
+  <div class="nav-inner">
+    <a href="#top" aria-label="Home">
+      <img class="logo-mark" src="images/logo.png" alt="Dr. A P J Abdul Kalam Centre For Leadership And Social Change">
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="index.html" style="color:var(--red)">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="board.html">Advisory Board</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="news.html">News</a></li>
+      </ul>
+    </nav>
+    <a href="contact.html" class="nav-cta">Get Involved</a>
+    <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow hero-eyebrow">Centre For Leadership &amp; Social Change</div>
+          <h1 id="dynHeroTitle">Building leaders who choose to act, not just observe.</h1>
+          <p class="lead" id="dynHeroLead">We work with young Indians to turn civic conviction into civic capability &mdash; through education, electoral participation, and the discipline of personal transformation Dr. Kalam lived by.</p>
+          <div class="hero-actions">
+            <a href="#programs" class="btn btn-primary">Explore our programs</a>
+            <a href="#about" class="btn btn-ghost">Our vision</a>
+          </div>
+        </div>
+        <div class="hero-figure">
+          <div class="quote-card">
+            <p id="dynQuoteText">&ldquo;Dream is not the thing you see in sleep but is that thing that doesn't let you sleep.&rdquo;</p>
+            <span id="dynQuoteAuthor">&mdash; A.P.J. Abdul Kalam</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-row reveal">
+        <div class="stat"><div class="num" id="dynStat1Num">12+</div><div class="label" id="dynStat1Label">States reached</div></div>
+        <div class="stat"><div class="num" id="dynStat2Num">40K</div><div class="label" id="dynStat2Label">Young leaders trained</div></div>
+        <div class="stat"><div class="num" id="dynStat3Num">180</div><div class="label" id="dynStat3Label">Partner institutions</div></div>
+        <div class="stat"><div class="num" id="dynStat4Num">2018</div><div class="label" id="dynStat4Label">Founded</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / VISION -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Why We Exist</div>
+        <div>
+          <h2 id="dynAboutHeading">Just and equitable societies are built by people who show up &mdash; starting at the ballot box.</h2>
+          <p class="desc" id="dynAboutDesc" style="margin-top:16px;">Our vision is to nurture value-based leadership by encouraging young people to participate in the electoral process, and to facilitate personal transformation through education that is relevant to the world they will lead.</p>
+        </div>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar">
+          <span class="idx">Vision</span>
+          <h3>A generation that votes, questions, and builds</h3>
+          <p>We nurture value-based leadership by making electoral participation a habit of citizenship, not an afterthought, and by creating just and equitable spaces for that citizenship to grow.</p>
+        </div>
+        <div class="pillar">
+          <span class="idx">Mission</span>
+          <h3>Education that transforms, not just informs</h3>
+          <p>We design learning journeys &mdash; workshops, fellowships, mentorship &mdash; that push young people through real personal transformation, the same discipline Dr. Kalam applied to his own life's work.</p>
+        </div>
+        <div class="pillar">
+          <span class="idx">Method</span>
+          <h3>Grounded in institutions, led by youth</h3>
+          <p>We partner with colleges, civic bodies, and first-time community leaders so the work outlives any single programme &mdash; leadership as infrastructure, not an event.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS - flight path timeline -->
+  <section id="programs" class="programs-section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">What We Run</div>
+        <div>
+          <h2>Three programmes. One trajectory &mdash; from citizen to leader.</h2>
+          <p class="desc" style="margin-top:16px;">Each track builds on the last, the way Dr. Kalam moved from student, to scientist, to servant of the republic.</p>
+        </div>
+      </div>
+
+      <div class="flight-path dyn-programs">
+        <div class="program-row reveal">
+          <div class="alt">STAGE 01</div>
+          <div class="program-marker"></div>
+          <div class="program-body">
+            <h3>Civic Foundations</h3>
+            <p>Campus workshops on the Constitution, the electoral process, and first-time voter registration &mdash; built for students who've never been taught how a republic actually runs.</p>
+          </div>
+        </div>
+        <div class="program-row reveal">
+          <div class="alt">STAGE 02</div>
+          <div class="program-marker"></div>
+          <div class="program-body">
+            <h3>Leadership Fellowship</h3>
+            <p>A year-long cohort programme pairing young leaders with mentors from public service, science, and local government to work on real community problems.</p>
+          </div>
+        </div>
+        <div class="program-row reveal">
+          <div class="alt">STAGE 03</div>
+          <div class="program-marker"></div>
+          <div class="program-body">
+            <h3>Community Action Labs</h3>
+            <p>Fellows return to their own districts to run voter awareness drives, civic audits, and local initiatives &mdash; turning training into measurable change on the ground.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVISORY BOARD -->
+  <section id="board">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Who Guides Us</div>
+        <div>
+          <h2>An advisory committee drawn from public service, academia, and civic institutions.</h2>
+        </div>
+      </div>
+
+      <div class="board-grid reveal" id="dynBoardPreview">
+        <div class="board-card">
+          <div class="board-photo" data-initials="RK"></div>
+          <h4>Dr. Ramesh Kumar</h4>
+          <div class="role">Chair, Advisory Committee</div>
+        </div>
+        <div class="board-card">
+          <div class="board-photo" data-initials="SV"></div>
+          <h4>Smt. Sunita Verma</h4>
+          <div class="role">Electoral Affairs</div>
+        </div>
+        <div class="board-card">
+          <div class="board-photo" data-initials="AM"></div>
+          <h4>Prof. Anil Mishra</h4>
+          <div class="role">Academic Programmes</div>
+        </div>
+        <div class="board-card">
+          <div class="board-photo" data-initials="PT"></div>
+          <h4>Dr. Priya Thakur</h4>
+          <div class="role">Community Outreach</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">From The Field</div>
+        <div>
+          <h2>Since 2018, on campuses and in constituencies.</h2>
+        </div>
+      </div>
+      <div class="gallery-strip reveal" id="dynGalleryStrip">
+        <div class="gallery-item"><span class="cap">Fellowship Cohort &middot; Patna</span></div>
+        <div class="gallery-item"><span class="cap">Voter Drive &middot; 2023</span></div>
+        <div class="gallery-item"><span class="cap">Campus Workshop</span></div>
+        <div class="gallery-item"><span class="cap">Community Lab</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section id="news">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Latest</div>
+        <div>
+          <h2>News from the Centre</h2>
+        </div>
+      </div>
+      <div class="news-list reveal" id="dynNewsPreview">
+        <a class="news-row" href="news.html">
+          <div class="news-date">14 Jul 2026</div>
+          <h4>Fifth Leadership Fellowship cohort begins with 60 fellows across Bihar and Jharkhand</h4>
+          <div class="news-arrow">&rarr;</div>
+        </a>
+        <a class="news-row" href="news.html">
+          <div class="news-date">02 Mar 2026</div>
+          <h4>Campus voter registration drives cross 25,000 first-time registrations this cycle</h4>
+          <div class="news-arrow">&rarr;</div>
+        </a>
+        <a class="news-row" href="news.html">
+          <div class="news-date">15 Oct 2025</div>
+          <h4>Centre signs MoU with three state universities for civic education curriculum</h4>
+          <div class="news-arrow">&rarr;</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="wrap">
+      <h2>Leadership isn't inherited. It's practiced.</h2>
+      <p>Whether you're a student, an educator, or an institution &mdash; there's a place for you in this work.</p>
+      <a href="contact.html" class="btn btn-primary">Partner with us</a>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <img class="footer-logo" src="images/logo.png" alt="Kalam Centre logo">
+        <p style="max-width:32ch;font-size:14px;">Nurturing value-based leadership and civic participation among India's young people.</p>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="board.html">Advisory Board</a></li>
+          <li><a href="news.html">News</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li id="dynAddress">Patna, Bihar, India</li>
+          <li id="dynEmail">info@kalamleadershipcentre.org</li>
+          <li id="dynPhone">+91 00000 00000</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Follow</h5>
+        <ul>
+          <li><a href="#" id="dynFacebook">Facebook</a></li>
+          <li><a href="#" id="dynTwitter">Twitter / X</a></li>
+          <li><a href="#" id="dynInstagram">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Dr. A P J Abdul Kalam Centre For Leadership And Social Change. All rights reserved.</span>
+      <span>Privacy Policy &nbsp;&middot;&nbsp; Terms of Use</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  // Mobile menu toggle
+  const toggle = document.querySelector('.menu-toggle');
+  const navUl = document.querySelector('nav ul');
+  toggle.addEventListener('click', ()=>{
+    const open = navUl.style.display === 'flex';
+    navUl.style.display = open ? 'none' : 'flex';
+    navUl.style.cssText += open ? '' : 'position:absolute;top:70px;left:0;right:0;background:#F6F2E9;flex-direction:column;padding:24px 32px;gap:18px;border-bottom:1px solid rgba(22,33,63,0.14);';
+  });
+
+  // Trajectory spine: dashed arc following scroll, dot marks progress
+  const path = document.getElementById('trajectory-path');
+  const dot = document.getElementById('trajectory-dot');
+  const svg = document.getElementById('trajectory-svg');
+
+  function buildPath(){
+    const w = window.innerWidth;
+    const h = document.documentElement.scrollHeight;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.setAttribute('width', w);
+    svg.setAttribute('height', h);
+    const amplitude = 70;
+    let d = `M ${w-60} 0`;
+    const step = 400;
+    let toggleSide = 1;
+    for(let y=step; y<h; y+=step){
+      const x = (w-60) + amplitude*Math.sin(y/500)*toggleSide;
+      d += ` Q ${w-60+amplitude*toggleSide} ${y-step/2}, ${x} ${y}`;
+      toggleSide *= -1;
+    }
+    path.setAttribute('d', d);
+    return path.getTotalLength();
+  }
+
+  let pathLength = buildPath();
+  function updateDot(){
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = Math.min(scrollTop/docHeight, 1);
+    const pt = path.getPointAtLength(progress*pathLength);
+    dot.setAttribute('cx', pt.x);
+    dot.setAttribute('cy', pt.y + window.scrollY - window.scrollY); // stays in doc coords since svg is fixed... adjust below
+  }
+
+  // Since svg is position:fixed but sized to full doc height, translate by scroll
+  function positionSvg(){
+    svg.style.transform = `translateY(${-window.scrollY}px)`;
+  }
+
+  function refreshAll(){
+    pathLength = buildPath();
+    updateDot();
+    positionSvg();
+  }
+
+  window.addEventListener('scroll', ()=>{ updateDot(); positionSvg(); }, {passive:true});
+  window.addEventListener('resize', refreshAll);
+  refreshAll();
+</script>
+
+<script src="script.js"></script>
+<script src="public.js"></script>
+
+</body>
+</html>

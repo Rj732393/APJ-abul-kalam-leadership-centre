@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News - Kalam Centre Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/authGuard.js"></script>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">Kalam Centre<br><span>Admin Panel</span></div>
+  <nav>
+    <a href="index.html">📊 Dashboard</a>
+    <a href="settings.html">⚙️ Site Settings</a>
+    <a href="board.html">👥 Advisory Board</a>
+    <a href="gallery.html">🖼️ Gallery</a>
+    <a href="news.html" class="active">📰 News</a>
+    <a href="programs.html">🎯 Programmes</a>
+  </nav>
+  <div class="foot">© 2026 Kalam Centre Admin</div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <button id="menuToggle" class="btn btn-ghost btn-sm" style="display:none;">☰</button>
+    <h1>News</h1>
+    <span class="badge" id="countBadge">0 articles</span>
+  </div>
+
+  <div class="content">
+    <div id="msg" class="msg"></div>
+
+    <div class="card">
+      <h2 id="formTitle">Add News Article</h2>
+      <form id="newsForm">
+        <input type="hidden" id="itemId">
+        <label>Title</label>
+        <input type="text" id="title" required>
+        <div class="form-grid">
+          <div>
+            <label>Date</label>
+            <input type="date" id="news_date">
+          </div>
+          <div>
+            <label>Image (optional)</label>
+            <input type="file" id="image" accept="image/*">
+          </div>
+        </div>
+        <img id="imgPreview" class="img-preview">
+        <label>Content</label>
+        <textarea id="content" style="min-height:120px;"></textarea>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Save Article</button>
+          <button type="button" id="cancelEdit" class="btn btn-ghost" style="display:none;">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>All Articles</h2>
+      <table>
+        <thead>
+          <tr><th>Photo</th><th>Title</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="itemTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+  const form = document.getElementById('newsForm');
+  const imageInput = document.getElementById('image');
+  const imgPreview = document.getElementById('imgPreview');
+
+  imageInput.addEventListener('change', () => {
+    const file = imageInput.files[0];
+    if (file) {
+      imgPreview.src = URL.createObjectURL(file);
+      imgPreview.style.display = 'block';
+    }
+  });
+
+  function fmtDate(d) {
+    if (!d) return '';
+    return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+  }
+
+  async function loadItems() {
+    try {
+      const items = await apiRequest('/api/news');
+      document.getElementById('countBadge').textContent = items.length + ' articles';
+      const tbody = document.getElementById('itemTable');
+      tbody.innerHTML = items.map(n => `
+        <tr>
+          <td>${n.image ? `<img class="table-thumb" src="${imgUrl(n.image)}">` : '—'}</td>
+          <td>${n.title}</td>
+          <td>${fmtDate(n.news_date)}</td>
+          <td>
+            <button class="btn btn-ghost btn-sm" onclick='editItem(${JSON.stringify(n)})'>Edit</button>
+            <button class="btn btn-red btn-sm" onclick="deleteItem(${n.id})">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    } catch (err) {
+      showMsg('msg', err.message, 'error');
+    }
+  }
+
+  function editItem(n) {
+    document.getElementById('formTitle').textContent = 'Edit Article';
+    document.getElementById('itemId').value = n.id;
+    document.getElementById('title').value = n.title;
+    document.getElementById('news_date').value = n.news_date ? n.news_date.substring(0,10) : '';
+    document.getElementById('content').value = n.content || '';
+    if (n.image) {
+      imgPreview.src = imgUrl(n.image);
+      imgPreview.style.display = 'block';
+    }
+    document.getElementById('cancelEdit').style.display = 'inline-flex';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.getElementById('cancelEdit').addEventListener('click', resetForm);
+
+  function resetForm() {
+    form.reset();
+    document.getElementById('itemId').value = '';
+    document.getElementById('formTitle').textContent = 'Add News Article';
+    document.getElementById('cancelEdit').style.display = 'none';
+    imgPreview.style.display = 'none';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('itemId').value;
+    const fd = new FormData();
+    fd.append('title', document.getElementById('title').value);
+    fd.append('news_date', document.getElementById('news_date').value);
+    fd.append('content', document.getElementById('content').value);
+    if (imageInput.files[0]) fd.append('image', imageInput.files[0]);
+
+    try {
+      if (id) {
+        await apiUpload('/api/news/' + id, 'PUT', fd);
+        showMsg('msg', 'Article update ho gaya ✅', 'success');
+      } else {
+        await apiUpload('/api/news', 'POST', fd);
+        showMsg('msg', 'Article add ho gaya ✅', 'success');
+      }
+      resetForm();
+      loadItems();
+    } catch (err) {
+      showMsg('msg', err.message, 'error');
+    }
+  });
+
+  async function deleteItem(id) {
+    if (!confirm('Pakka delete karna hai?')) return;
+    try {
+      await apiRequest('/api/news/' + id, 'DELETE');
+      showMsg('msg', 'Article delete ho gaya ✅', 'success');
+      loadItems();
+    } catch (err) {
+      showMsg('msg', err.message, 'error');
+    }
+  }
+
+  loadItems();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Settings - Kalam Centre Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/authGuard.js"></script>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">Kalam Centre<br><span>Admin Panel</span></div>
+  <nav>
+    <a href="index.html">📊 Dashboard</a>
+    <a href="settings.html" class="active">⚙️ Site Settings</a>
+    <a href="board.html">👥 Advisory Board</a>
+    <a href="gallery.html">🖼️ Gallery</a>
+    <a href="news.html">📰 News</a>
+    <a href="programs.html">🎯 Programmes</a>
+  </nav>
+  <div class="foot">© 2026 Kalam Centre Admin</div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <button id="menuToggle" class="btn btn-ghost btn-sm" style="display:none;">☰</button>
+    <h1>Site Settings</h1>
+    <span class="badge">Home page + Footer content</span>
+  </div>
+
+  <div class="content">
+    <div id="msg" class="msg"></div>
+
+    <form id="settingsForm">
+      <div class="card">
+        <h2>Hero Section</h2>
+        <label>Hero Title</label>
+        <textarea name="hero_title" id="hero_title"></textarea>
+        <label>Hero Lead Text</label>
+        <textarea name="hero_lead" id="hero_lead"></textarea>
+        <label>Quote Text</label>
+        <textarea name="quote_text" id="quote_text"></textarea>
+        <label>Quote Author</label>
+        <input type="text" name="quote_author" id="quote_author">
+      </div>
+
+      <div class="card">
+        <h2>Stats Row (4 numbers shown on Home page)</h2>
+        <div class="form-grid">
+          <div><label>Stat 1 Number</label><input type="text" name="stat1_num" id="stat1_num"></div>
+          <div><label>Stat 1 Label</label><input type="text" name="stat1_label" id="stat1_label"></div>
+          <div><label>Stat 2 Number</label><input type="text" name="stat2_num" id="stat2_num"></div>
+          <div><label>Stat 2 Label</label><input type="text" name="stat2_label" id="stat2_label"></div>
+          <div><label>Stat 3 Number</label><input type="text" name="stat3_num" id="stat3_num"></div>
+          <div><label>Stat 3 Label</label><input type="text" name="stat3_label" id="stat3_label"></div>
+          <div><label>Stat 4 Number</label><input type="text" name="stat4_num" id="stat4_num"></div>
+          <div><label>Stat 4 Label</label><input type="text" name="stat4_label" id="stat4_label"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>About / Vision Section</h2>
+        <label>About Heading</label>
+        <textarea name="about_heading" id="about_heading"></textarea>
+        <label>About Description</label>
+        <textarea name="about_desc" id="about_desc"></textarea>
+      </div>
+
+      <div class="card">
+        <h2>Contact / Footer</h2>
+        <div class="form-grid">
+          <div><label>Address</label><input type="text" name="address" id="address"></div>
+          <div><label>Email</label><input type="email" name="email" id="email"></div>
+          <div><label>Phone</label><input type="text" name="phone" id="phone"></div>
+          <div><label>Facebook URL</label><input type="url" name="facebook_url" id="facebook_url"></div>
+          <div><label>Twitter / X URL</label><input type="url" name="twitter_url" id="twitter_url"></div>
+          <div><label>Instagram URL</label><input type="url" name="instagram_url" id="instagram_url"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+  const fields = ['hero_title','hero_lead','quote_text','quote_author',
+    'stat1_num','stat1_label','stat2_num','stat2_label',
+    'stat3_num','stat3_label','stat4_num','stat4_label',
+    'about_heading','about_desc','address','email','phone',
+    'facebook_url','twitter_url','instagram_url'];
+
+  async function loadSettings() {
+    try {
+      const data = await apiRequest('/api/settings');
+      fields.forEach(f => {
+        if (document.getElementById(f)) document.getElementById(f).value = data[f] || '';
+      });
+    } catch (err) {
+      showMsg('msg', err.message, 'error');
+    }
+  }
+
+  document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const body = {};
+    fields.forEach(f => body[f] = document.getElementById(f).value);
+    try {
+      await apiRequest('/api/settings', 'PUT', body);
+      showMsg('msg', 'Settings save ho gayi ✅', 'success');
+    } catch (err) {
+      showMsg('msg', err.message, 'error');
+    }
+  });
+
+  loadSettings();
+</script>
+
+</body>
+</html>
