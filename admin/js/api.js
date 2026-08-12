@@ -11,9 +11,15 @@ function imgUrl(path) {
   return API_BASE + path;
 }
 
+// Login token ko header me daalne ke liye
+function authHeaders() {
+  const token = localStorage.getItem('adminToken');
+  return token ? { 'Authorization': 'Bearer ' + token } : {};
+}
+
 // GET / DELETE jaise simple JSON requests ke liye
 async function apiRequest(endpoint, method = 'GET', body = null) {
-  const options = { method, headers: {} };
+  const options = { method, headers: { ...authHeaders() } };
   if (body) {
     options.headers['Content-Type'] = 'application/json';
     options.body = JSON.stringify(body);
@@ -26,7 +32,7 @@ async function apiRequest(endpoint, method = 'GET', body = null) {
 
 // POST / PUT jab photo upload bhi karni ho (FormData use hota hai)
 async function apiUpload(endpoint, method, formData) {
-  const res = await fetch(API_BASE + endpoint, { method, body: formData });
+  const res = await fetch(API_BASE + endpoint, { method, headers: { ...authHeaders() }, body: formData });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Kuch galat ho gaya');
   return data;

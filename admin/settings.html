@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
   <div class="brand">Kalam Centre<br><span>Admin Panel</span></div>
   <nav>
     <a href="index.html">📊 Dashboard</a>
@@ -20,7 +20,13 @@
     <a href="news.html">📰 News</a>
     <a href="programs.html">🎯 Programmes</a>
   </nav>
-  <div class="foot">© 2026 Kalam Centre Admin</div>
+
+  <div class="sidebar-footer">
+    <button id="logoutBtn" class="logout-btn-sidebar">
+      <span>🚪</span> Logout
+    </button>
+    <div class="foot">© 2026 Kalam Centre Admin</div>
+  </div>
 </aside>
 
 <div class="main">
@@ -119,6 +125,22 @@
   });
 
   loadSettings();
+
+  // Logout
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminUsername');
+    window.location.href = 'login.html';
+  });
+
+  // Mobile sidebar toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  if (window.innerWidth <= 820) menuToggle.style.display = 'inline-flex';
+  window.addEventListener('resize', () => {
+    menuToggle.style.display = window.innerWidth <= 820 ? 'inline-flex' : 'none';
+  });
+  menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
 </script>
 
 </body>
