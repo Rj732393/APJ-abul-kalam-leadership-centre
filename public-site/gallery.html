@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
 
@@ -212,48 +211,48 @@
     <div class="wrap">
 
       <div class="gallery-filter">
-        <button class="active">All</button>
-        <button>Fellowship</button>
-        <button>Voter Drives</button>
-        <button>Community Labs</button>
-        <button>Campus Workshops</button>
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="fellowship">Fellowship</button>
+        <button data-filter="voter-drives">Voter Drives</button>
+        <button data-filter="community-labs">Community Labs</button>
+        <button data-filter="campus-workshops">Campus Workshops</button>
       </div>
 
       <div class="full-gallery" id="dynGalleryFull">
 
-        <div class="gallery-item tint-navy">
+        <div class="gallery-item tint-navy" data-category="fellowship">
           <span class="cap">Leadership Fellowship · Patna</span>
         </div>
 
-        <div class="gallery-item tint-red">
+        <div class="gallery-item tint-red" data-category="voter-drives">
           <span class="cap">Voter Awareness Drive · 2023</span>
         </div>
 
-        <div class="gallery-item tint-teal">
+        <div class="gallery-item tint-teal" data-category="campus-workshops">
           <span class="cap">Campus Workshop · Ranchi</span>
         </div>
 
-        <div class="gallery-item tint-gold">
+        <div class="gallery-item tint-gold" data-category="community-labs">
           <span class="cap">Community Action Lab · Gaya</span>
         </div>
 
-        <div class="gallery-item tint-violet">
+        <div class="gallery-item tint-violet" data-category="fellowship">
           <span class="cap">Leadership Residential</span>
         </div>
 
-        <div class="gallery-item tint-red">
+        <div class="gallery-item tint-red" data-category="voter-drives">
           <span class="cap">Voter Registration Campaign · Muzaffarpur</span>
         </div>
 
-        <div class="gallery-item tint-teal">
+        <div class="gallery-item tint-teal" data-category="campus-workshops">
           <span class="cap">Campus Workshop · Bhagalpur</span>
         </div>
 
-        <div class="gallery-item tint-gold">
+        <div class="gallery-item tint-gold" data-category="community-labs">
           <span class="cap">Community Project · Dhanbad</span>
         </div>
 
-        <div class="gallery-item tint-navy">
+        <div class="gallery-item tint-navy" data-category="fellowship">
           <span class="cap">Institutional Partnership Signing · 2025</span>
         </div>
 
@@ -312,6 +311,28 @@
     });
   }, {threshold:0.15});
   revealEls.forEach(el=>io.observe(el));
+
+  const slugMap = {
+    'All': 'all',
+    'Fellowship': 'fellowship',
+    'Voter Drives': 'voter-drives',
+    'Community Labs': 'community-labs',
+    'Campus Workshops': 'campus-workshops'
+  };
+
+  document.querySelectorAll('.gallery-filter button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gallery-filter button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const text = btn.textContent.trim();
+      const filter = slugMap[text] || btn.dataset.filter || 'all';
+      document.querySelectorAll('#dynGalleryFull .gallery-item').forEach(item => {
+        const itemCategory = item.dataset.category || '';
+        const show = filter === 'all' || itemCategory === filter;
+        item.style.display = show ? '' : 'none';
+      });
+    });
+  });
 
   const toggle = document.querySelector('.menu-toggle');
   const navUl = document.querySelector('nav ul');

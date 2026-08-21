@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/admin.css">
 <script src="js/authGuard.js"></script>
-<link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
 
@@ -44,6 +43,16 @@
             <input type="text" id="caption" placeholder="e.g. Fellowship Cohort · Patna">
           </div>
           <div>
+            <label>Category</label>
+            <select id="category">
+              <option value="">— None —</option>
+              <option value="fellowship">Fellowship</option>
+              <option value="voter-drives">Voter Drives</option>
+              <option value="community-labs">Community Labs</option>
+              <option value="campus-workshops">Campus Workshops</option>
+            </select>
+          </div>
+          <div>
             <label>Color Tint</label>
             <select id="tint">
               <option value="tint-navy">Navy</option>
@@ -74,7 +83,7 @@
       <h2>All Photos</h2>
       <table>
         <thead>
-          <tr><th>Photo</th><th>Caption</th><th>Tint</th><th>Order</th><th>Actions</th></tr>
+          <tr><th>Photo</th><th>Caption</th><th>Category</th><th>Tint</th><th>Order</th><th>Actions</th></tr>
         </thead>
         <tbody id="itemTable"></tbody>
       </table>
@@ -87,6 +96,13 @@
   const form = document.getElementById('galleryForm');
   const imageInput = document.getElementById('image');
   const imgPreview = document.getElementById('imgPreview');
+
+  const CATEGORY_LABELS = {
+    'fellowship': 'Fellowship',
+    'voter-drives': 'Voter Drives',
+    'community-labs': 'Community Labs',
+    'campus-workshops': 'Campus Workshops'
+  };
 
   imageInput.addEventListener('change', () => {
     const file = imageInput.files[0];
@@ -105,6 +121,7 @@
         <tr>
           <td><img class="table-thumb" src="${imgUrl(g.image)}"></td>
           <td>${g.caption || ''}</td>
+          <td><span class="tag">${CATEGORY_LABELS[g.category] || '—'}</span></td>
           <td><span class="tag">${g.tint}</span></td>
           <td>${g.sort_order}</td>
           <td>
@@ -122,6 +139,7 @@
     document.getElementById('formTitle').textContent = 'Edit Photo';
     document.getElementById('itemId').value = g.id;
     document.getElementById('caption').value = g.caption || '';
+    document.getElementById('category').value = g.category || '';
     document.getElementById('tint').value = g.tint;
     document.getElementById('sort_order').value = g.sort_order;
     document.getElementById('photoRequired').style.display = 'none';
@@ -151,6 +169,7 @@
     }
     const fd = new FormData();
     fd.append('caption', document.getElementById('caption').value);
+    fd.append('category', document.getElementById('category').value);
     fd.append('tint', document.getElementById('tint').value);
     fd.append('sort_order', document.getElementById('sort_order').value);
     if (imageInput.files[0]) fd.append('image', imageInput.files[0]);

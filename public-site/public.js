@@ -101,7 +101,7 @@ async function loadBoard() {
 // ---------------- GALLERY ----------------
 function galleryItemHTML(g) {
   return `
-    <div class="gallery-item ${esc(g.tint || 'tint-navy')}">
+    <div class="gallery-item ${esc(g.tint || 'tint-navy')}" data-category="${esc(g.category || '')}">
       <img src="${imgUrl(g.image)}" alt="${esc(g.caption)}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
       <span class="cap">${esc(g.caption)}</span>
     </div>`;
