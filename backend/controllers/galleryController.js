@@ -32,10 +32,32 @@ export const getImageById = async (req, res) => {
   }
 };
 
+const ALLOWED_CATEGORIES = ['fellowship', 'voter-drives', 'community-labs', 'campus-workshops'];
+
+const validateCategory = (category) => {
+  if (category === undefined || category === null || category === '') {
+    return { valid: true, value: null };
+  }
+  const trimmed = String(category).trim();
+  if (trimmed === '') {
+    return { valid: true, value: null };
+  }
+  if (!ALLOWED_CATEGORIES.includes(trimmed)) {
+    return { valid: false, error: 'Invalid category' };
+  }
+  return { valid: true, value: trimmed };
+};
+
 // CREATE - image required
 export const createImage = async (req, res) => {
   try {
-    const { caption, tint, sort_order } = req.body;
+    const { caption, tint, sort_order, category } = req.body;
+
+    const catCheck = validateCategory(category);
+    if (!catCheck.valid) {
+      return res.status(400).json({ error: catCheck.error });
+    }
+
     if (!req.file) return res.status(400).json({ error: 'Image upload karna zaroori hai' });
 
     const image = `/uploads/${req.file.filename}`;
@@ -46,11 +68,12 @@ export const createImage = async (req, res) => {
       .input('image', sql.NVarChar, image)
       .input('tint', sql.NVarChar, tint || 'tint-navy')
       .input('sort_order', sql.Int, sort_order || 0)
-      .query(`INSERT INTO gallery_images (caption, image, tint, sort_order)
+      .input('category', sql.NVarChar, catCheck.value)
+      .query(`INSERT INTO gallery_images (caption, image, tint, sort_order, category)
               OUTPUT INSERTED.id
-              VALUES (@caption, @image, @tint, @sort_order)`);
+              VALUES (@caption, @image, @tint, @sort_order, @category)`);
 
-    res.status(201).json({ id: result.recordset[0].id, caption, image, tint, sort_order: sort_order || 0 });
+    res.status(201).json({ id: result.recordset[0].id, caption, image, tint, sort_order: sort_order || 0, category: catCheck.value });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -60,7 +83,12 @@ export const createImage = async (req, res) => {
 export const updateImage = async (req, res) => {
   try {
     const { id } = req.params;
-    const { caption, tint, sort_order } = req.body;
+    const { caption, tint, sort_order, category } = req.body;
+
+    const catCheck = validateCategory(category);
+    if (!catCheck.valid) {
+      return res.status(400).json({ error: catCheck.error });
+    }
 
     const pool = await poolPromise;
     const existing = await pool.request()
@@ -83,7 +111,8 @@ export const updateImage = async (req, res) => {
       .input('image', sql.NVarChar, image)
       .input('tint', sql.NVarChar, tint || 'tint-navy')
       .input('sort_order', sql.Int, sort_order || 0)
-      .query('UPDATE gallery_images SET caption=@caption, image=@image, tint=@tint, sort_order=@sort_order WHERE id=@id');
+      .input('category', sql.NVarChar, catCheck.value)
+      .query('UPDATE gallery_images SET caption=@caption, image=@image, tint=@tint, sort_order=@sort_order, category=@category WHERE id=@id');
 
     res.json({ message: 'Gallery image update ho gayi' });
   } catch (err) {
